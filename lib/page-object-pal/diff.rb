@@ -21,17 +21,24 @@ module PageObjectPal
     end
 
     def scrub_css(tag, prop, pval, source)
-      match = source.css("#{tag.to_s}.#{pval}") if prop == :class
-      match = source.css("#{tag.to_s}##{pval}") if prop == :id
-      match = source.css("#{tag.to_s}")[pval.to_i] if prop == :index
-      match = source.search("[text()*='#{pval}']") if prop == :text
+      case prop
+      when :class
+        match = source.css("#{tag.to_s}.#{pval}")
+      when :id
+        match = source.css("#{tag.to_s}##{pval}")
+      when :index
+        match = source.css("#{tag.to_s}")[pval.to_i]
+      when :text
+        match = source.search("[text()*='#{pval}']")
+      else
+        raise SupportError, "PageObjectPal does not support elements identified with '#{prop}'... yet"
+      end
 
       raise IdentifierError, "Could not resolve '#{html_to_dsl(tag)}' where :#{prop} == '#{pval}'" if match.to_a.empty? 
     end
 
     def scrub_xpath(anchor, xpath, source)
       match = source.xpath(xpath)
-
       raise IdentifierError, "Could not resolve '#{html_to_dsl(anchor)}' where :xpath == '#{xpath}'" if match.to_a.empty?
     end
 
