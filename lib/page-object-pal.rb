@@ -2,6 +2,7 @@ require "page-object-pal/version"
 require "page-object-pal/elements"
 require "page-object-pal/diff"
 require "nokogiri"
+require "open-uri"
 
 module PageObjectPal
   include PageObjectPal::Elements
