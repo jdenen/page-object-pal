@@ -15,7 +15,7 @@ module PageObjectPal
     def parse_element(string)
       return if string.lstrip.start_with? "#"
       tag = dsl_to_html(string[/^(\w+)/])
-      sym = string[/id|class|index|xpath/].to_sym
+      sym = string[/class|id|index|text|xpath/].to_sym
       val = string[/"(.+)"/].to_s.gsub("\"", "")
       { tag => { sym => val } }
     end

@@ -21,9 +21,10 @@ module PageObjectPal
     end
 
     def scrub_css(tag, prop, pval, source)
-      match = source.css("#{tag.to_s}##{pval}") if prop == :id
       match = source.css("#{tag.to_s}.#{pval}") if prop == :class
+      match = source.css("#{tag.to_s}##{pval}") if prop == :id
       match = source.css("#{tag.to_s}")[pval.to_i] if prop == :index
+      match = source.search("[text()*='#{pval}']") if prop == :text
 
       raise IdentifierError, "Could not resolve '#{html_to_dsl(tag)}' where :#{prop} == '#{pval}'" if match.to_a.empty? 
     end
