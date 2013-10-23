@@ -4,5 +4,5 @@ task :default => :test
 
 desc "Execute specs"
 task :test do 
-  sh "rspec --color"
+  sh "bundle exec rspec --color"
 end
