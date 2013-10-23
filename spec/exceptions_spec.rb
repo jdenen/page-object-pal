@@ -1,5 +1,4 @@
-require 'page-object-pal'
-require 'rspec-given'
+require 'rspec'
 
 describe PageObjectPal do
   Given(:source) { Nokogiri::HTML(open("http://www.manta.com")) }

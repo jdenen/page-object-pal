@@ -1,5 +1,4 @@
-require 'page-object-pal'
-require 'rspec-given'
+require 'rspec'
 
 describe PageObjectPal do
   Given(:obj) { require_relative 'Page'; Page }
