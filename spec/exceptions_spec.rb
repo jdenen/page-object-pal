@@ -9,11 +9,11 @@ describe PageObjectPal, :private => true do
 
   context "using invalid identification" do
     context "CSS" do
-      Then { expect { PageObjectPal.scrub_css('a', :id, 'invalid-id', source) }.to raise_error(PageObjectPal::IdentifierError) }
+      Then { expect { PageObjectPal.scrub_css('a', :id, 'invalid-id', source) }.to raise_error(PageObjectPal::PageObjectOutdated) }
     end
 
     context "Xpath" do
-      Then { expect { PageObjectPal.scrub_xpath('a', "//a[@id='invalid-id']", source) }.to raise_error(PageObjectPal::IdentifierError) }
+      Then { expect { PageObjectPal.scrub_xpath('a', "//a[@id='invalid-id']", source) }.to raise_error(PageObjectPal::PageObjectOutdated) }
     end
   end
 
