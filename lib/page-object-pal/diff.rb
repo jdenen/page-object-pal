@@ -34,12 +34,12 @@ module PageObjectPal
         raise SupportError, "PageObjectPal does not support elements identified with '#{prop}'... yet"
       end
 
-      raise IdentifierError, "Could not resolve '#{html_to_dsl(tag)}' where :#{prop} == '#{pval}'" if match.to_a.empty? 
+      raise IdentifierError, "Could not identify '#{html_to_dsl(tag)}' where :#{prop} == '#{pval}'" if match.to_a.empty? 
     end
 
     def scrub_xpath(anchor, xpath, source)
       match = source.xpath(xpath)
-      raise IdentifierError, "Could not resolve '#{html_to_dsl(anchor)}' where :xpath == '#{xpath}'" if match.to_a.empty?
+      raise IdentifierError, "Could not identify '#{html_to_dsl(anchor)}' where :xpath == '#{xpath}'" if match.to_a.empty?
     end
 
   end

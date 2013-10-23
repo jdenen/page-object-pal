@@ -30,9 +30,13 @@ module PageObjectPal
   def find_file(klass)
     path = File.join("**", "*.rb")
     Dir.glob(path) do |file|
-      next unless File.open(file).read.include? "class #{klass.to_s}"
-      return file
+      next unless File.open(file).read.include? "class #{klass.to_s}" 
+      File.open(file).each_line do |line| 
+        next unless line.start_with? "class #{klass.to_s}"
+        return file
+      end
     end
+    raise CannotFindClass, "Could not find file containing '#{klass.to_s}' class"
   end
 
   def find_class_methods(klass)
