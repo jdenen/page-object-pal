@@ -1,13 +1,13 @@
 require 'page-object-pal'
-require 'page-object-pal/spec/pages/XpathPass'
-require 'page-object-pal/spec/pages/XpathFail'
+require_relative 'pages/XpathPass'
+require_relative 'pages/XpathFail'
 
-describe PageDoctor do
+describe PageObjectPal do
   it "returns true with a valid xpath" do
-    PageDoctor.dx(XpathPass, "http://www.manta.com").should be_true
+    PageObjectPal.lookout(XpathPass, "http://www.manta.com").should be_true
   end
 
   it "raises an IdentifierError with an invalid xpath" do
-    expect { PageDoctor.dx(XpathFail, "http://www.manta.com") }.to raise_error(PageDoctor::IdentifierError)
+    expect { PageObjectPal.lookout(XpathFail, "http://www.manta.com") }.to raise_error(PageObjectPal::IdentifierError)
   end
 end

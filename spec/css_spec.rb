@@ -1,15 +1,15 @@
 require 'page-object-pal'
-require 'page-object-pal/spec/pages/CssPass'
-require 'page-object-pal/spec/pages/CssFail'
+require_relative 'pages/CssPass'
+require_relative 'pages/CssFail'
 
-describe PageDoctor do  
+describe PageObjectPal do  
 
   it "returns true on success" do
-    PageDoctor.dx(CssPass, "http://www.manta.com").should be_true
+    PageObjectPal.lookout(CssPass, "http://www.manta.com").should be_true
   end
 
   it "raises an IdentifierError on failure" do 
-    expect { PageDoctor.dx(CssFail, "http://www.manta.com") }.to raise_error(PageDoctor::IdentifierError)
+    expect { PageObjectPal.lookout(CssFail, "http://www.manta.com") }.to raise_error(PageObjectPal::IdentifierError)
   end
 
 end
