@@ -1,6 +1,6 @@
 require 'rspec'
 
-describe PageObjectPal do
+describe PageObjectPal, :private => true do
   Given(:source) { Nokogiri::HTML(open("http://www.manta.com")) }
 
   context "using invalid property identifier" do

@@ -13,6 +13,7 @@ module PageObjectPal
       end
     end
 
+    private
     def scrub_source(tag, identifier, source)
       identifier.each do |prop, val|
         scrub_css(tag, prop, val, source) unless prop == :xpath
@@ -34,12 +35,16 @@ module PageObjectPal
         raise SupportError, "PageObjectPal does not support elements identified with '#{prop}'... yet"
       end
 
-      raise IdentifierError, "Could not identify '#{html_to_dsl(tag)}' where :#{prop} == '#{pval}'" if match.to_a.empty? 
+      raise IdentifierError, "Could not identify '#{html_to_dsl(tag)}' where :#{prop} == '#{pval}'" if failure? match
     end
 
     def scrub_xpath(anchor, xpath, source)
       match = source.xpath(xpath)
-      raise IdentifierError, "Could not identify '#{html_to_dsl(anchor)}' where :xpath == '#{xpath}'" if match.to_a.empty?
+      raise IdentifierError, "Could not identify '#{html_to_dsl(anchor)}' where :xpath == '#{xpath}'" if failure? match
+    end
+
+    def failure?(scrubs)
+      scrubs.to_a.empty?
     end
 
   end
