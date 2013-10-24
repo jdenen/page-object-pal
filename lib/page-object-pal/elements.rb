@@ -13,7 +13,7 @@ module PageObjectPal
     end
 
     def parse_element(string)
-      return if string.lstrip.start_with? "#"
+      return unless string.lstrip.start_with? "div", "image", "link", "list_item", "ordered_list", "paragraph", "radio_button", "span", "text_area", "text_field", "unordered_list"
       tag = dsl_to_html(string[/^(\w+)/])
       sym = string[/class|id|index|text|xpath/].to_sym
       val = string[/"(.+)"|\d+/].to_s.gsub("\"", "")
