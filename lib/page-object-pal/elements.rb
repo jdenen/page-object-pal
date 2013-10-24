@@ -6,6 +6,7 @@ module PageObjectPal
       methods.each do |meth|
         File.open(path).read.each_line do |line|
           next unless line.include? meth.to_s
+          next unless line.lstrip.start_with? "div", "image", "link", "list_item", "ordered_list", "paragraph", "radio_button", "span", "text_area", "text_field", "unordered_list"
           elements << parse_element(line.lstrip)
         end
       end
@@ -13,9 +14,8 @@ module PageObjectPal
     end
 
     def parse_element(string)
-      return unless string.lstrip.start_with? "div", "image", "link", "list_item", "ordered_list", "paragraph", "radio_button", "span", "text_area", "text_field", "unordered_list"
       tag = dsl_to_html(string[/^(\w+)/])
-      sym = string[/class|id|index|text|xpath/].to_sym
+      sym = string[/:class|:id|:index|:text|:xpath/].gsub(":","").to_sym
       val = string[/"(.+)"|\d+/].to_s.gsub("\"", "")
       { tag => { sym => val } }
     end
