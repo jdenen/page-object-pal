@@ -6,7 +6,7 @@ describe PageObjectPal do
   Given(:src) { "http://www.manta.com" }
 
   context "Evaluate from outside PageObject" do
-    Then { PageObjectPal.lookout(page, path, src).should be_true }
+    Then { PageObjectPal.examine(page, path, src).should be_true }
   end
 
   context "Evaluate from PageObject method" do

@@ -9,7 +9,7 @@ class Page
   link(:by_xpath, :xpath => "(//a)[1]")
 
   def self.healthy?
-    PageObjectPal.lookout(self, __FILE__, "http://www.manta.com")
+    PageObjectPal.examine(self, __FILE__, "http://www.manta.com")
   end
 
 end

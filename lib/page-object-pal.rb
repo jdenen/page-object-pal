@@ -9,7 +9,7 @@ module PageObjectPal
   include PageObjectPal::Diff
   extend self
 
-  def lookout(klass, path, url)
+  def examine(klass, path, url)
     page_source = Nokogiri::HTML(open(url))
     page_object = parse_class(klass, path)
     diff_page(page_source, page_object)
@@ -18,7 +18,7 @@ module PageObjectPal
 
   private
   def success!
-    return true
+    true
   end
 
   def parse_class(klass, path)
