@@ -1,8 +1,16 @@
 require 'rspec'
 
 describe PageObjectPal do
-  Given(:obj) { require_relative 'Page'; Page }
+  Given(:page) { require_relative 'Page'; Page }
+  Given(:path) { File.join(File.dirname(__FILE__), "Page.rb") }
   Given(:src) { "http://www.manta.com" }
 
-  Then { PageObjectPal.lookout(obj, src).should be_true }
+  context "Evaluate from outside PageObject" do
+    Then { PageObjectPal.lookout(page, path, src).should be_true }
+  end
+
+  context "Evaluate from PageObject method" do
+    Then { page.healthy?.should be_true }
+  end
+
 end

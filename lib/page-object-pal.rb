@@ -9,9 +9,9 @@ module PageObjectPal
   include PageObjectPal::Diff
   extend self
 
-  def lookout(klass, url)
+  def lookout(klass, path, url)
     page_source = Nokogiri::HTML(open(url))
-    page_object = parse_class(klass)
+    page_object = parse_class(klass, path)
     diff_page(page_source, page_object)
     success!
   end
@@ -21,22 +21,9 @@ module PageObjectPal
     return true
   end
 
-  def parse_class(klass)
-    file = find_file(klass)
+  def parse_class(klass, path)
     methods = find_class_methods(klass)
-    elements = parse_methods(methods, file)
-  end
-
-  def find_file(klass)
-    path = File.join("**", "*.rb")
-    Dir.glob(path) do |file|
-      next unless File.open(file).read.include? "class #{klass.to_s}" 
-      File.open(file).each_line do |line| 
-        next unless line.start_with? "class #{klass.to_s}"
-        return file
-      end
-    end
-    raise CannotFindClass, "Could not find file containing '#{klass.to_s}' class"
+    elements = parse_methods(methods, path)
   end
 
   def find_class_methods(klass)

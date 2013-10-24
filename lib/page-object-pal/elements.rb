@@ -1,10 +1,10 @@
 module PageObjectPal
   module Elements
 
-    def parse_methods(methods, file)
+    def parse_methods(methods, path)
       elements = []
       methods.each do |meth|
-        File.open(file).read.each_line do |line|
+        File.open(path).read.each_line do |line|
           next unless line.include? meth.to_s
           elements << parse_element(line.lstrip)
         end
