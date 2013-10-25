@@ -24,7 +24,7 @@ module PageObjectPal
     def parse_element(string)
       tag = dsl_to_html(string[/^(\w+)/])
       sym = string[/:class|:id|:index|:text|:xpath/].gsub(":","").to_sym
-      val = string[/"(.+)"|\d+/].to_s.gsub("\"", "")
+      (sym == :index) ? val = string[/\d+/] : val = string[/"(.+)"/].to_s.gsub("\"", "")
       { tag => { sym => val } }
     end
 
