@@ -5,6 +5,10 @@ module PageObjectPal
   module Diff
     include PageObjectPal::Elements
 
+    # 
+    # Find page object defined methods that do not match code
+    # in the source HTML.
+    #
     def diff_page(source, elements)
       elements.each do |e_hash|
         e_hash.each do |elem, identifier|
@@ -13,7 +17,10 @@ module PageObjectPal
       end
     end
 
-    private
+    # 
+    # Look for code in the source HTML matching the identifying
+    # code defined in the page object class.
+    #
     def scrub_source(tag, identifier, source)
       identifier.each do |prop, val|
         scrub_css(tag, prop, val, source) unless prop == :xpath
@@ -21,6 +28,7 @@ module PageObjectPal
       end
     end
 
+    # TODO Merge into #scrub_source 
     def scrub_css(tag, prop, pval, source)
       case prop
       when :class
@@ -38,6 +46,7 @@ module PageObjectPal
       raise PageObjectOutdated, "Could not identify '#{html_to_dsl(tag)}' where :#{prop} == '#{pval}'" if failure? match
     end
 
+    # TODO Merge into #scrub_source
     def scrub_xpath(anchor, xpath, source)
       match = source.xpath(xpath)
       raise PageObjectOutdated, "Could not identify '#{html_to_dsl(anchor)}' where :xpath == '#{xpath}'" if failure? match

@@ -1,6 +1,10 @@
 module PageObjectPal
   module Elements
 
+    # 
+    # Find lines in the page object class file that define the non-super
+    # instance methods. 
+    #
     def parse_methods(methods, path)
       elements = []
       methods.each do |meth|
@@ -13,6 +17,10 @@ module PageObjectPal
       elements
     end
 
+    # 
+    # Convert method defining string to hash containing anchor_tag,
+    # identifying_property, and property_value.
+    #
     def parse_element(string)
       tag = dsl_to_html(string[/^(\w+)/])
       sym = string[/:class|:id|:index|:text|:xpath/].gsub(":","").to_sym
@@ -20,6 +28,9 @@ module PageObjectPal
       { tag => { sym => val } }
     end
 
+    # 
+    # Convert non-HTML anchor_tags from the PageObject::DSL to HTML.
+    #
     def dsl_to_html(anchor)
       case anchor
       when "image" then :img
@@ -35,6 +46,9 @@ module PageObjectPal
       end
     end
 
+    # 
+    # Convert HTML to PageObject::DSL where the two are not identical.
+    #
     def html_to_dsl(anchor)
       case anchor
       when :img then "image"
