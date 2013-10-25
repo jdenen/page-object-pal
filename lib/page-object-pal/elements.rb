@@ -22,6 +22,7 @@ module PageObjectPal
     # identifying_property, and property_value.
     #
     def parse_element(string)
+      string.gsub!(/(,\s+)/, ",")
       tag = dsl_to_html(string[/^(\w+)/])
 
       case tag
@@ -34,7 +35,7 @@ module PageObjectPal
     # Convert method defining string for PageObject::Accessors#element method.
     #
     def element_tag(string)
-      tag = string[/,(?: ):(\w+)/].gsub(", :", "")
+      tag = string[/,:(\w+)/].gsub(",:","")
       sym = string[/:class|:id|:index|:text|:xpath/].gsub(":","").to_sym
       (sym == :index) ? val = string[/\d+/] : val = string[/"(.+)"/].gsub("\"","")
       { tag => { sym => val } }
