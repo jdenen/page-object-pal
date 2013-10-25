@@ -22,38 +22,29 @@ module PageObjectPal
     # code defined in the page object class.
     #
     def scrub_source(tag, identifier, source)
-      identifier.each do |prop, val|
-        scrub_css(tag, prop, val, source) unless prop == :xpath
-        scrub_xpath(tag, val, source) if prop == :xpath
+      identifier.each do |prop, prop_val|
+        match = case prop
+        when :class
+          source.css("#{tag.to_s}.#{prop_val}")
+        when :id
+          source.css("#{tag.to_s}##{prop_val}")
+        when :index
+          source.css("#{tag.to_s}")[prop_val.to_i]
+        when :text
+          source.search("[text()*='#{prop_val}']")
+        when :xpath
+          source.xpath(prop_val)
+        else
+          raise SupportError, "PageObjectPal doesn't support elements identified by '#{prop}'... yet. Consider ", 
+            "forking the project at http://github.com/jdenen/page-object-pal."
+        end
+
+        raise PageObjectOutdated, "Could not identify '#{html_to_dsl(tag)}' where :#{prop} == '#{prop_val}'" if failure? match
       end
     end
 
-    # TODO Merge into #scrub_source 
-    def scrub_css(tag, prop, pval, source)
-      case prop
-      when :class
-        match = source.css("#{tag.to_s}.#{pval}")
-      when :id
-        match = source.css("#{tag.to_s}##{pval}")
-      when :index
-        match = source.css("#{tag.to_s}")[pval.to_i]
-      when :text
-        match = source.search("[text()*='#{pval}']")
-      else
-        raise SupportError, "PageObjectPal does not support elements identified with '#{prop}'... yet"
-      end
-
-      raise PageObjectOutdated, "Could not identify '#{html_to_dsl(tag)}' where :#{prop} == '#{pval}'" if failure? match
-    end
-
-    # TODO Merge into #scrub_source
-    def scrub_xpath(anchor, xpath, source)
-      match = source.xpath(xpath)
-      raise PageObjectOutdated, "Could not identify '#{html_to_dsl(anchor)}' where :xpath == '#{xpath}'" if failure? match
-    end
-
-    def failure?(scrubs)
-      scrubs.to_a.empty?
+    def failure?(match)
+      match.to_a.empty?
     end
 
   end
