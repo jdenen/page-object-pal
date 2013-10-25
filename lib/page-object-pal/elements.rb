@@ -10,7 +10,7 @@ module PageObjectPal
       methods.each do |meth|
         File.open(path).read.each_line do |line|
           next unless line.include? meth.to_s
-          next unless line.lstrip.start_with? "div", "image", "link", "list_item", "ordered_list", "paragraph", "radio_button", "span", "text_area", "text_field", "unordered_list"
+          next unless line.lstrip.start_with? "div", "element", "image", "link", "list_item", "ordered_list", "paragraph", "radio_button", "span", "text_area", "text_field", "unordered_list"
           elements << parse_element(line.lstrip)
         end
       end
@@ -23,8 +23,29 @@ module PageObjectPal
     #
     def parse_element(string)
       tag = dsl_to_html(string[/^(\w+)/])
+
+      case tag
+      when :element then element_tag(string)
+      else standard_tag(tag, string)
+      end
+    end
+
+    # 
+    # Convert method defining string for PageObject::Accessors#element method.
+    #
+    def element_tag(string)
+      tag = string[/,(?: ):(\w+)/].gsub(", :", "")
       sym = string[/:class|:id|:index|:text|:xpath/].gsub(":","").to_sym
-      (sym == :index) ? val = string[/\d+/] : val = string[/"(.+)"/].to_s.gsub("\"", "")
+      (sym == :index) ? val = string[/\d+/] : val = string[/"(.+)"/].gsub("\"","")
+      { tag => { sym => val } }
+    end
+
+    # 
+    # Convert method defining string for standard PageObject::Accessors methods.
+    #
+    def standard_tag(tag, string)
+      sym = string[/:class|:id|:index|:text|:xpath/].gsub(":","").to_sym
+      (sym == :index) ? val = string[/\d+/] : val = string[/"(.+)"/].gsub("\"","")
       { tag => { sym => val } }
     end
 
