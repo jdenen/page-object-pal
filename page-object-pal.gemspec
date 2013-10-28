@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = PageObjectPal::VERSION
   spec.authors       = ["Johnson Denen"]
   spec.email         = ["jdenen@manta.com"]
-  spec.description   = %q{Did the test suite find a bug? Or are the page objects outdated by new code? PageObjectPal will keep an eye on your page objects and let you know when they need some TLC.}
-  spec.summary       = %q{Page object maintenance made easier}
+  spec.description   = %q{Page object maintenance made easier}
+  spec.summary       = %q{Did the test suite find a bug? Or are the page objects outdated by new code? PageObjectPal will keep an eye on your page objects and let you know when they need some TLC.}
   spec.homepage      = "http://github.com/jdenen/page-object-pal"
   spec.license       = "MIT"
 
