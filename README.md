@@ -1,4 +1,5 @@
 # PageObjectPal
+[![Gem Version](https://badge.fury.io/rb/page-object-pal.png)](http://badge.fury.io/rb/page-object-pal)
 
 PageObjectPal keeps an eye on your [page-object](https://github.com/cheezy/page-object) classes, alerting you to outdated element information. Unit test your page classes with PageObjectPal, and don't wait for your acceptance tests to fail!
 
