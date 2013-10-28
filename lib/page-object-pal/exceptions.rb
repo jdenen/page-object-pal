@@ -1,5 +1,5 @@
 module PageObjectPal
-  class PageObjectOutdated < StandardError; end
+  class PageObjectInvalid < StandardError; end
   class AnchorError < StandardError; end
   class SupportError < StandardError; end
   class CannotFindClass < StandardError; end

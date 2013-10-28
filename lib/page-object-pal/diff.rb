@@ -39,7 +39,7 @@ module PageObjectPal
             "forking the project at http://github.com/jdenen/page-object-pal."
         end
 
-        raise PageObjectOutdated, "Could not identify '#{html_to_dsl(tag)}' where :#{prop} == '#{prop_val}'" if failure? match
+        raise PageObjectInvalid, "Could not identify '#{html_to_dsl(tag)}' where :#{prop} == '#{prop_val}'" if failure? match
       end
     end
 
