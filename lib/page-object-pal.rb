@@ -42,13 +42,21 @@ module PageObjectPal
   # @return [Boolean] True if no error is raised
   #
   def examine(klass, path, url)
+    polish! url
     diff_page(Nokogiri::HTML(open(url)), parse_class(klass, path))
-    success!
+    declare_success
   end
 
   private
-  def success!
+  def declare_success
     true
+  end
+
+  # 
+  # Ensure the given URL will work with open-uri. 
+  #
+  def polish!(url)
+    url.replace "http://#{url}" unless url.start_with? "http://"
   end
 
   #
