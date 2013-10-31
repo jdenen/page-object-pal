@@ -16,7 +16,7 @@ require "open-uri"
 #     end
 #   end
 #
-# Can wrapped in a page object class method for validation.
+# Can be wrapped in a page object class method for validation.
 # @example Class method
 #   class Page
 #     include PageObject
